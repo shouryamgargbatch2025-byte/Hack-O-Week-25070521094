@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Book Catalogue</title>
+  <style>
+    :root {
+      --bg: #f4f0ea;
+      --panel: #fffdfa;
+      --ink: #1f2937;
+      --muted: #5f6673;
+      --brand: #7c3aed;
+      --brand-soft: #ede9fe;
+      --danger: #dc2626;
+      --ok: #15803d;
+      --line: #e8dfd6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(124, 58, 237, 0.14), transparent 22%),
+        linear-gradient(160deg, #f7f0e6, #f1f2f9 55%, #f9f7f3);
+      padding: 24px;
+    }
+
+    .app {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 20px;
+    }
+
+    .panel,
+    .catalogue {
+      background: rgba(255, 253, 250, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(44, 23, 66, 0.08);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+    }
+
+    .subtext {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid #d7d2cc;
+      font: inherit;
+      background: white;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font: 700 0.95rem "Segoe UI", sans-serif;
+      cursor: pointer;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #8b5cf6, var(--brand));
+      color: white;
+    }
+
+    .ghost {
+      background: #f4f1ff;
+      color: var(--brand);
+    }
+
+    .danger {
+      background: #fee2e2;
+      color: var(--danger);
+    }
+
+    .status {
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px dashed #cfd8e3;
+      color: var(--muted);
+      min-height: 52px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.8rem;
+      color: var(--brand);
+    }
+
+    .search-head {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .search-head input {
+      flex: 1;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .book {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .book .meta {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--brand-soft);
+      color: var(--brand);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .empty {
+      padding: 24px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px dashed #cdbfe9;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .row,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .search-head {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="panel">
+      <h1>Library Book Catalogue</h1>
+      <p class="subtext">This project stores books in a fixed-size array. You can add books, search by title, and remove them while watching the live preview update.</p>
+
+      <div class="group">
+        <label for="capacity">Maximum Capacity</label>
+        <input id="capacity" type="number" min="1" value="5">
+      </div>
+
+      <div class="group">
+        <label for="title">Book Title</label>
+        <input id="title" value="Eloquent JavaScript">
+      </div>
+
+      <div class="group">
+        <label for="author">Author</label>
+        <input id="author" value="Marijn Haverbeke">
+      </div>
+
+      <div class="group">
+        <label for="category">Category</label>
+        <input id="category" value="Programming">
+      </div>
+
+      <div class="row">
+        <button class="primary" id="addBtn">Add Book</button>
+        <button class="ghost" id="loadSampleBtn">Load Sample Data</button>
+      </div>
+
+      <div class="group" style="margin-top: 14px;">
+        <label for="removeTitle">Remove by Title</label>
+        <input id="removeTitle" placeholder="Enter exact title to remove">
+      </div>
+
+      <button class="danger" id="removeBtn">Remove Book</button>
+
+      <div class="status" id="statusBox">Waiting for your action.</div>
+    </section>
+
+    <section class="catalogue">
+      <h2>Live Preview</h2>
+
+      <div class="stats">
+        <article class="stat">
+          <strong id="countStat">0</strong>
+          <span>Total Books</span>
+        </article>
+        <article class="stat">
+          <strong id="capacityStat">5</strong>
+          <span>Capacity</span>
+        </article>
+        <article class="stat">
+          <strong id="remainingStat">5</strong>
+          <span>Remaining Slots</span>
+        </article>
+      </div>
+
+      <div class="search-head">
+        <input id="searchInput" placeholder="Search by title">
+        <button class="ghost" id="clearSearchBtn">Clear Search</button>
+      </div>
+
+      <div class="cards" id="bookList"></div>
+    </section>
+  </main>
+
+  <script>
+    let books = [];
+
+    const capacityInput = document.getElementById("capacity");
+    const titleInput = document.getElementById("title");
+    const authorInput = document.getElementById("author");
+    const categoryInput = document.getElementById("category");
+    const removeTitleInput = document.getElementById("removeTitle");
+    const searchInput = document.getElementById("searchInput");
+    const statusBox = document.getElementById("statusBox");
+    const bookList = document.getElementById("bookList");
+
+    function getCapacity() {
+      return Math.max(1, Number(capacityInput.value) || 1);
+    }
+
+    function setStatus(message, kind = "neutral") {
+      const colors = {
+        neutral: "#f8fafc",
+        success: "#ecfdf5",
+        error: "#fef2f2"
+      };
+      statusBox.style.background = colors[kind];
+      statusBox.textContent = message;
+    }
+
+    function renderBooks() {
+      const searchText = searchInput.value.trim().toLowerCase();
+      const filteredBooks = books.filter((book) => book.title.toLowerCase().includes(searchText));
+
+      document.getElementById("countStat").textContent = books.length;
+      document.getElementById("capacityStat").textContent = getCapacity();
+      document.getElementById("remainingStat").textContent = Math.max(0, getCapacity() - books.length);
+
+      if (!filteredBooks.length) {
+        bookList.innerHTML = `<div class="empty">${searchText ? "No matching books found." : "No books in the catalogue yet."}</div>`;
+        return;
+      }
+
+      bookList.innerHTML = filteredBooks.map((book, index) => `
+        <article class="book">
+          <span class="pill">Book ${index + 1}</span>
+          <h3>${book.title}</h3>
+          <div class="meta">Author: ${book.author}</div>
+          <div class="meta">Category: ${book.category}</div>
+        </article>
+      `).join("");
+    }
+
+    function addBook() {
+      const capacity = getCapacity();
+      const title = titleInput.value.trim();
+      const author = authorInput.value.trim();
+      const category = categoryInput.value.trim();
+
+      if (!title || !author || !category) {
+        setStatus("Please fill in title, author, and category before adding a book.", "error");
+        return;
+      }
+
+      if (books.length >= capacity) {
+        setStatus(`Cannot add more books. Capacity limit of ${capacity} has been reached.`, "error");
+        return;
+      }
+
+      books.push({ title, author, category });
+      setStatus(`"${title}" was added successfully.`, "success");
+      renderBooks();
+    }
+
+    function removeBook() {
+      const target = removeTitleInput.value.trim().toLowerCase();
+      if (!target) {
+        setStatus("Enter the exact title you want to remove.", "error");
+        return;
+      }
+
+      const originalLength = books.length;
+      books = books.filter((book) => book.title.toLowerCase() !== target);
+
+      if (books.length === originalLength) {
+        setStatus("No book matched that title, so nothing was removed.", "error");
+        return;
+      }
+
+      setStatus("Book removed successfully.", "success");
+      removeTitleInput.value = "";
+      renderBooks();
+    }
+
+    function loadSampleData() {
+      const samples = [
+        { title: "Clean Code", author: "Robert C. Martin", category: "Software" },
+        { title: "The Pragmatic Programmer", author: "Andrew Hunt", category: "Programming" },
+        { title: "You Don't Know JS", author: "Kyle Simpson", category: "JavaScript" }
+      ];
+
+      books = [];
+      const capacity = getCapacity();
+      samples.slice(0, capacity).forEach((book) => books.push(book));
+      setStatus("Sample books loaded into the catalogue.", "success");
+      renderBooks();
+    }
+
+    function syncCapacity() {
+      const capacity = getCapacity();
+      if (books.length > capacity) {
+        books = books.slice(0, capacity);
+        setStatus(`Capacity reduced to ${capacity}. Extra books were trimmed to fit the limit.`, "error");
+      } else {
+        setStatus(`Capacity updated to ${capacity}.`, "neutral");
+      }
+      renderBooks();
+    }
+
+    document.getElementById("addBtn").addEventListener("click", addBook);
+    document.getElementById("removeBtn").addEventListener("click", removeBook);
+    document.getElementById("loadSampleBtn").addEventListener("click", loadSampleData);
+    document.getElementById("clearSearchBtn").addEventListener("click", () => {
+      searchInput.value = "";
+      renderBooks();
+    });
+    searchInput.addEventListener("input", renderBooks);
+    capacityInput.addEventListener("input", syncCapacity);
+
+    renderBooks();
+  </script>
+</body>
+</html>
