@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith '26 Registration</title>
+    <style>
+        /* --- CSS STYLING --- */
+        :root {
+            --primary-color: #4c1d95;
+            --button-gradient: linear-gradient(to right, #667eea, #764ba2);
+            /* This is the white card background. 0.95 means it's 95% solid white. */
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+      body {
+    /* using a reliable online image link */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                      url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1920&q=80');
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}         .container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
+            width: 100%;
+            max-width: 550px;
+            backdrop-filter: blur(5px); /* Adds a slight blur effect behind the card */
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 1.5rem;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            color: #475569;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: #f8fafc;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.2);
+            background-color: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--button-gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.4);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Zenith '26</h1>
+            <p>Annual Cultural Extravaganza</p>
+        </div>
+
+        <form action="#" method="POST">
+            <div class="form-grid">
+                
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">College Email</label>
+                    <input type="email" id="email" name="email" placeholder="student@college.edu" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="prn">PRN Number</label>
+                    <input type="text" id="prn" name="prn" placeholder="Enter PRN" maxlength="15" 
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="text" id="mobile" name="mobile" placeholder="e.g. 9876543210" maxlength="10" 
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="event">Select Your Event</label>
+                    <select id="event" name="event" required>
+                        <option value="" disabled selected>-- Select Activity --</option>
+                        <option value="hackathon">Hackathon (CodeWars)</option>
+                        <option value="dance">Dance (Groove)</option>
+                        <option value="music">Music (Unplugged)</option>
+                        <option value="gaming">E-Sports (Valorant/FIFA)</option>
+                        <option value="debate">Debate (Speak Up)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tshirt">T-Shirt Size (For Merchandise)</label>
+                    <select id="tshirt" name="tshirt" required>
+                        <option value="" disabled selected>-- Select Size --</option>
+                        <option value="S">Small (S)</option>
+                        <option value="M">Medium (M)</option>
+                        <option value="L">Large (L)</option>
+                        <option value="XL">Extra Large (XL)</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="semester">Semester</label>
+                    <select id="semester" name="semester" required>
+                        <option value="" disabled selected>Select Semester</option>
+                        <option value="2">Semester 2</option>
+                        <option value="4">Semester 4</option>
+                        <option value="6">Semester 6</option>
+                        <option value="8">Semester 8</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="section">Section</label>
+                    <select id="section" name="section" required>
+                        <option value="" disabled selected>Select Section</option>
+                        <option value="A">Section A</option>
+                        <option value="B">Section B</option>
+                        <option value="C">Section C</option>
+                        <option value="D">Section D</option>
+                        <option value="E">Section E</option>
+                        <option value="F">Section F</option>
+                    </select>
+                </div>
+
+                <button type="submit">Complete Registration</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('fullname').value;
+            const mobile = document.getElementById('mobile').value;
+            const eventChoice = document.getElementById('event').value;
+
+            // Simple Mobile Validation
+            if (mobile.length !== 10) {
+                alert("Please enter a valid 10-digit mobile number.");
+                return;
+            }
+
+            alert(`🎉 Success! Registration Confirmed.\n\nName: ${name}\nEvent: ${eventChoice}\n\nSee you at Zenith '26!`);
+            form.reset();
+        });
+    </script>
+
+</body>
+</html>

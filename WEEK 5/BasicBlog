@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wanderlust Chronicles</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #1a1a2e;
+    --accent: #e94560;
+    --gold: #ffd700;
+    --cream: #f5f5f0;
+    --text-dark: #16213e;
+    --text-light: #4a4a6a;
+    --teal: #0f3460;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+/* Animated Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(26, 26, 46, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '✈';
+    position: absolute;
+    font-size: 300px;
+    opacity: 0.03;
+    top: -50px;
+    right: -50px;
+    animation: float 6s ease-in-out infinite;
+}
+
+header::after {
+    content: '🗺';
+    position: absolute;
+    font-size: 200px;
+    opacity: 0.03;
+    bottom: -30px;
+    left: -30px;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+header p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: relative;
+    z-index: 1;
+}
+
+/* Navigation */
+nav {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 20px 30px;
+    display: inline-block;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--accent);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+nav a:hover {
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+nav a:hover::after {
+    width: 60%;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Section Headers */
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--primary);
+    text-align: center;
+    margin: 60px 0 40px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    margin: 15px auto;
+    border-radius: 2px;
+}
+
+/* Blog Posts */
+.blog-post {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-post:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.blog-post:hover::before {
+    transform: scaleX(1);
+}
+
+.blog-post img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.blog-post:hover img {
+    transform: scale(1.05);
+}
+
+.image-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.image-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+    pointer-events: none;
+}
+
+.content-wrapper {
+    padding: 30px;
+    position: relative;
+}
+
+.blog-post h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary);
+    font-size: 2rem;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+}
+
+.blog-post h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.blog-post:hover h2::after {
+    width: 100%;
+}
+
+.blog-post p {
+    color: var(--text-light);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-top: 15px;
+}
+
+.location-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+}
+
+/* Destinations Section */
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.destination-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.4s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.destination-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.destination-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.destination-card:hover img {
+    transform: scale(1.1);
+}
+
+.destination-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(26,26,46,0.9), transparent);
+    padding: 30px 20px 20px;
+    color: white;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.destination-card:hover .destination-overlay {
+    transform: translateY(0);
+}
+
+.destination-overlay h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.destination-overlay p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.destination-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--accent);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Memories Section */
+.memories-section {
+    background: linear-gradient(135deg, var(--teal) 0%, var(--primary) 100%);
+    padding: 60px 40px;
+    border-radius: 30px;
+    margin: 60px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.memories-section::before {
+    content: '★';
+    position: absolute;
+    font-size: 400px;
+    opacity: 0.05;
+    top: -100px;
+    right: -100px;
+    color: white;
+}
+
+.memories-section .section-title {
+    color: white;
+}
+
+.memories-section .section-title::after {
+    background: var(--gold);
+}
+
+.memories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.memory-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s ease;
+}
+
+.memory-item:hover {
+    transform: scale(1.05) rotate(2deg);
+    z-index: 10;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.memory-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.memory-item:hover img {
+    transform: scale(1.2);
+}
+
+.memory-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26,26,46,0.9);
+    color: white;
+    padding: 15px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.memory-item:hover .memory-caption {
+    transform: translateY(0);
+}
+
+/* Connect Section */
+.connect-section {
+    background: white;
+    padding: 60px 40px;
+    border-radius: 30px;
+    margin: 60px 0;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.connect-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.1);
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, var(--accent) 0%, #ff6b6b 100%);
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.social-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.social-card:hover {
+    border-color: var(--accent);
+    transform: translateX(10px);
+}
+
+.social-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.social-card h3 {
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+}
+
+.social-card p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.newsletter {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--teal) 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.newsletter h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.newsletter-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.newsletter-input input {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+}
+
+.newsletter-btn {
+    background: var(--gold);
+    color: var(--primary);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.newsletter-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--primary) 0%, #0f0f23 100%);
+    color: white;
+    margin-top: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '✦';
+    position: absolute;
+    font-size: 400px;
+    opacity: 0.02;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+footer p {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+    opacity: 0.9;
+}
+
+.heart {
+    color: var(--accent);
+    display: inline-block;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+    
+    nav a {
+        padding: 15px 15px;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+    }
+    
+    .blog-post img {
+        height: 200px;
+    }
+    
+    .container {
+        width: 95%;
+    }
+    
+    .connect-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .destinations-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+}
+
+/* Scroll Animation */
+.blog-post, .destination-card, .memory-item {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.blog-post:nth-child(1) { animation-delay: 0.1s; }
+.blog-post:nth-child(2) { animation-delay: 0.2s; }
+.blog-post:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Wanderlust Chronicles</h1>
+<p>Tales From the Road Less Traveled</p>
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#destinations">Destinations</a>
+<a href="#memories">Memories</a>
+<a href="#connect">Connect</a>
+</nav>
+
+<div class="container">
+
+<!-- Home Section -->
+<section id="home">
+<div class="blog-post">
+<div class="image-wrapper">
+<img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&h=300&fit=crop" alt="Goa Beaches">
+</div>
+<div class="content-wrapper">
+<span class="location-tag">India • West Coast</span>
+<h2>Sunset Serenity in Goa</h2>
+<p>
+Golden sands stretching endlessly, waves whispering secrets to the shore, and the aroma of spice-laden seafood filling the salty air. 
+My weekend escape to this coastal paradise blended tranquil beach mornings with electric nightlife, creating memories painted in 
+coral hues and starlit skies.
+</p>
+</div>
+</div>
+
+<div class="blog-post">
+<div class="image-wrapper">
+<img src="https://images.unsplash.com/photo-1626010448982-4d629bfc7416?w=800&h=300&fit=crop" alt="Manali Mountains">
+</div>
+<div class="content-wrapper">
+<span class="location-tag">India • Himalayas</span>
+<h2>Mountain Magic in Manali</h2>
+<p>
+Snow-crowned peaks piercing the clouds, pine-scented winds carrying stories of ancient valleys, and the thrill of Solang Valley's 
+adventures. Wrapped in woolens, I savored steaming momos while the mountains stood guard, their silence speaking louder than 
+any city noise ever could.
+</p>
+</div>
+</div>
+
+<div class="blog-post">
+<div class="image-wrapper">
+<img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?w=800&h=300&fit=crop" alt="Jaipur Architecture">
+</div>
+<div class="content-wrapper">
+<span class="location-tag">India • Royal Rajasthan</span>
+<h2>Palatial Dreams in Jaipur</h2>
+<p>
+Pink sandstone walls glowing in the desert sun, intricate jharokhas of Hawa Mahal catching breezes from centuries past, and the 
+amber grandeur of forts perched on rugged hills. Walking through these royal corridors, I wasn't just visiting history—I was 
+living inside a living, breathing palace of stories.
+</p>
+</div>
+</div>
+</section>
+
+<!-- Destinations Section -->
+<section id="destinations">
+<h2 class="section-title">Explore Destinations</h2>
+<div class="destinations-grid">
+    <div class="destination-card">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop" alt="Beaches">
+        <span class="destination-badge">12 Posts</span>
+        <div class="destination-overlay">
+            <h3>Coastal Escapes</h3>
+            <p>Sun, sand, and endless horizons</p>
+        </div>
+    </div>
+    
+    <div class="destination-card">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=300&fit=crop" alt="Mountains">
+        <span class="destination-badge">8 Posts</span>
+        <div class="destination-overlay">
+            <h3>Mountain Retreats</h3>
+            <p>Peaks, valleys, and alpine air</p>
+        </div>
+    </div>
+    
+    <div class="destination-card">
+        <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=400&h=300&fit=crop" alt="Heritage">
+        <span class="destination-badge">15 Posts</span>
+        <div class="destination-overlay">
+            <h3>Heritage Trails</h3>
+            <p>History carved in stone</p>
+        </div>
+    </div>
+    
+    <div class="destination-card">
+        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=300&fit=crop" alt="Forests">
+        <span class="destination-badge">6 Posts</span>
+        <div class="destination-overlay">
+            <h3>Wilderness Wonders</h3>
+            <p>Where nature reigns supreme</p>
+        </div>
+    </div>
+    
+    <div class="destination-card">
+        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&h=300&fit=crop" alt="Islands">
+        <span class="destination-badge">4 Posts</span>
+        <div class="destination-overlay">
+            <h3>Island Paradises</h3>
+            <p>Tropical dreams come true</p>
+        </div>
+    </div>
+    
+    <div class="destination-card">
+        <img src="https://images.unsplash.com/photo-1519999482648-25049ddd37b1?w=400&h=300&fit=crop" alt="Desert">
+        <span class="destination-badge">5 Posts</span>
+        <div class="destination-overlay">
+            <h3>Desert Mysteries</h3>
+            <p>Golden sands, starry nights</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- Memories Section -->
+<section id="memories" class="memories-section">
+<h2 class="section-title">Captured Memories</h2>
+<div class="memories-grid">
+    <div class="memory-item">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop" alt="Sunrise">
+        <div class="memory-caption">Sunrise at Kanchenjunga</div>
+    </div>
+    <div class="memory-item">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&h=400&fit=crop" alt="Lake">
+        <div class="memory-caption">Reflections at Pangong Tso</div>
+    </div>
+    <div class="memory-item">
+        <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?w=400&h=400&fit=crop" alt="Streets">
+        <div class="memory-caption">Colorful streets of Varanasi</div>
+    </div>
+    <div class="memory-item">
+        <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=400&h=400&fit=crop" alt="Venice">
+        <div class="memory-caption">Gondola dreams in Venice</div>
+    </div>
+    <div class="memory-item">
+        <img src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=400&h=400&fit=crop" alt="Safari">
+        <div class="memory-caption">Wild encounters in Kenya</div>
+    </div>
+    <div class="memory-item">
+        <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=400&h=400&fit=crop" alt="Bali">
+        <div class="memory-caption">Temples of Bali</div>
+    </div>
+    <div class="memory-item">
+        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=400&fit=crop" alt="Fog">
+        <div class="memory-caption">Misty mornings in Munnar</div>
+    </div>
+    <div class="memory-item">
+        <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=400&fit=crop" alt="Bridge">
+        <div class="memory-caption">Golden Gate magic</div>
+    </div>
+</div>
+</section>
+
+<!-- Connect Section -->
+<section id="connect" class="connect-section">
+<h2 class="section-title">Let's Connect</h2>
+<div class="connect-grid">
+    <div class="contact-form-wrapper">
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Share your travel story or just say hello..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message ✈</button>
+        </form>
+    </div>
+    
+    <div class="social-links">
+        <div class="social-card">
+            <span class="social-icon">📸</span>
+            <h3>Instagram</h3>
+            <p>@wanderlust_chronicles</p>
+            <p style="font-size: 0.8rem; margin-top: 10px; color: var(--accent);">Daily stories & reels</p>
+        </div>
+        
+        <div class="social-card">
+            <span class="social-icon">🐦</span>
+            <h3>Twitter</h3>
+            <p>@wanderlust_blog</p>
+            <p style="font-size: 0.8rem; margin-top: 10px; color: var(--accent);">Travel tips & threads</p>
+        </div>
+        
+        <div class="newsletter">
+            <h3>Join the Adventure</h3>
+            <p>Get weekly travel inspiration delivered to your inbox</p>
+            <div class="newsletter-input">
+                <input type="email" placeholder="Enter your email">
+                <button class="newsletter-btn">Go!</button>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+</div>
+
+<footer>
+<p>© 2026 Wanderlust Chronicles | Crafted with <span class="heart">♥</span> for the Curious Soul</p>
+</footer>
+
+</body>
+</html>

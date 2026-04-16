@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Bites Bistro | Hackathon Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES (THEMING) --- */
+        :root {
+            --primary: #ff6b6b;
+            --primary-hover: #ee5253;
+            --secondary: #2d3436;
+            --bg: #f7f9fc;
+            --white: #ffffff;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-light: #747d8c;
+            --shadow: 0 10px 25px rgba(0,0,0,0.08);
+            --radius: 16px;
+        }
+
+        /* DARK MODE VARIABLES */
+        [data-theme="dark"] {
+            --secondary: #dfe6e9;
+            --bg: #1e272e;
+            --white: #2f3640;
+            --card-bg: #2f3640;
+            --text-main: #f1f2f6;
+            --text-light: #b2bec3;
+            --shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HERO HEADER --- */
+        header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        /* THEME TOGGLE BUTTON */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem 2rem;
+            display: grid;
+            grid-template-columns: 3.5fr 1fr;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        /* --- MENU SECTION --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        /* --- FIXED IMAGE STYLING --- */
+        .card-img-wrapper {
+            width: 100%;
+            height: 220px; /* Increased height slightly */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Key fix: Ensures image covers area without stretching */
+            object-position: center; /* Centers the focal point */
+            display: block; /* Removes bottom whitespace bug */
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .add-btn {
+            background-color: var(--text-main);
+            color: var(--bg);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* --- CART SIDEBAR --- */
+        .cart-sidebar {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 20px;
+            z-index: 90;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .cart-count-badge {
+            background: var(--primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .cart-items-container {
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .cart-items-container::-webkit-scrollbar { width: 6px; }
+        .cart-items-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            padding-bottom: 0.5rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .cart-item-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .cart-item-details { flex: 1; }
+        
+        .cart-item-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: block;
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+
+        .cart-item-price { font-size: 0.8rem; color: var(--text-light); }
+
+        .remove-btn {
+            color: #ff6b6b;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+        .remove-btn:hover { color: #d63031; }
+
+        .empty-msg {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Totals Area */
+        .total-section {
+            background-color: rgba(0,0,0,0.03);
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .total-final {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            border-top: 2px solid rgba(0,0,0,0.1);
+            padding-top: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ff4757);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .cart-sidebar { order: -1; margin-bottom: 2rem; position: relative; top: 0; }
+            header { height: 200px; }
+            header h1 { font-size: 2.5rem; }
+            .theme-toggle { top: 15px; right: 15px; padding: 6px 12px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Urban Bites Bistro</h1>
+        <p>Gourmet Street Food & Fine Dining</p>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            🌙 Dark Mode
+        </button>
+    </header>
+
+    <div class="container">
+        <main class="menu-grid">
+            
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" alt="Burger">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Classic Smashburger</h3>
+                    <p class="card-desc">Double beef patty, cheddar melt, caramelized onions on brioche.</p>
+                    <div class="card-footer">
+                        <span class="price">$12.50</span>
+                        <button class="add-btn" onclick="addToCart('Classic Smashburger', 12.50, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=800&q=80" alt="Pizza">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Truffle Mushroom Pizza</h3>
+                    <p class="card-desc">White base, wild mushrooms, truffle oil, and fresh thyme.</p>
+                    <div class="card-footer">
+                        <span class="price">$18.00</span>
+                        <button class="add-btn" onclick="addToCart('Truffle Mushroom Pizza', 18.00, 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" alt="Salad">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Superfood Bowl</h3>
+                    <p class="card-desc">Quinoa, avocado, roasted sweet potato, kale, and tahini.</p>
+                    <div class="card-footer">
+                        <span class="price">$11.00</span>
+                        <button class="add-btn" onclick="addToCart('Superfood Bowl', 11.00, 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=800&q=80" alt="Pasta">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Creamy Pesto Pasta</h3>
+                    <p class="card-desc">Fresh basil pesto, pine nuts, parmesan, and cherry tomatoes.</p>
+                    <div class="card-footer">
+                        <span class="price">$14.50</span>
+                        <button class="add-btn" onclick="addToCart('Creamy Pesto Pasta', 14.50, 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80" alt="Steak">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Ribeye Steak</h3>
+                    <p class="card-desc">Premium cut grilled to perfection with garlic herb butter.</p>
+                    <div class="card-footer">
+                        <span class="price">$24.00</span>
+                        <button class="add-btn" onclick="addToCart('Ribeye Steak', 24.00, 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80" alt="Tacos">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Street Tacos</h3>
+                    <p class="card-desc">Three soft corn tortillas with carne asada, onion, and cilantro.</p>
+                    <div class="card-footer">
+                        <span class="price">$9.50</span>
+                        <button class="add-btn" onclick="addToCart('Street Tacos', 9.50, 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" alt="Sushi">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Dragon Roll</h3>
+                    <p class="card-desc">Eel and cucumber inside, topped with avocado and unagi sauce.</p>
+                    <div class="card-footer">
+                        <span class="price">$13.00</span>
+                        <button class="add-btn" onclick="addToCart('Dragon Roll', 13.00, 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=800&q=80" alt="Wings">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">BBQ Wings</h3>
+                    <p class="card-desc">Crispy chicken wings tossed in our signature smoky BBQ glaze.</p>
+                    <div class="card-footer">
+                        <span class="price">$10.00</span>
+                        <button class="add-btn" onclick="addToCart('BBQ Wings', 10.00, 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1554520735-0a6b8b6ce8b7?auto=format&fit=crop&w=800&q=80" alt="Pancakes">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Maple Stack</h3>
+                    <p class="card-desc">Fluffy buttermilk pancakes served with maple syrup and butter.</p>
+                    <div class="card-footer">
+                        <span class="price">$8.50</span>
+                        <button class="add-btn" onclick="addToCart('Maple Stack', 8.50, 'https://images.unsplash.com/photo-1554520735-0a6b8b6ce8b7?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80" alt="Acai">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Açaí Berry Bowl</h3>
+                    <p class="card-desc">Frozen açaí topped with granola, banana, and chia seeds.</p>
+                    <div class="card-footer">
+                        <span class="price">$9.00</span>
+                        <button class="add-btn" onclick="addToCart('Açaí Berry Bowl', 9.00, 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+             <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80" alt="Cheesecake">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Berry Cheesecake</h3>
+                    <p class="card-desc">New York style cheesecake topped with fresh strawberries and glaze.</p>
+                    <div class="card-footer">
+                        <span class="price">$8.00</span>
+                        <button class="add-btn" onclick="addToCart('Berry Cheesecake', 8.00, 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=800&q=80" alt="Lava Cake">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Choco Lava Cake</h3>
+                    <p class="card-desc">Warm chocolate cake with a molten center and vanilla ice cream.</p>
+                    <div class="card-footer">
+                        <span class="price">$9.50</span>
+                        <button class="add-btn" onclick="addToCart('Choco Lava Cake', 9.50, 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=100&q=60')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <aside class="cart-sidebar">
+            <div class="cart-header">
+                <h3>Your Order</h3>
+                <span id="cart-count-badge" class="cart-count-badge">0</span>
+            </div>
+
+            <div class="cart-items-container" id="cart-container">
+                <p class="empty-msg">Start adding yummy items!</p>
+            </div>
+
+            <div class="total-section">
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal-price">$0.00</span>
+                </div>
+                <div class="total-row">
+                    <span>Tax (5%)</span>
+                    <span id="tax-price">$0.00</span>
+                </div>
+                <div class="total-row total-final">
+                    <span>Total</span>
+                    <span id="total-price">$0.00</span>
+                </div>
+            </div>
+
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </aside>
+    </div>
+
+    <script>
+        // --- DATA THEME TOGGLER ---
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.querySelector('.theme-toggle');
+            
+            // Toggle data-theme attribute
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.innerText = '🌙 Dark Mode';
+                btn.style.background = 'rgba(255,255,255,0.2)';
+                btn.style.color = 'white';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.innerText = '☀️ Light Mode';
+                btn.style.background = 'rgba(255, 234, 167, 0.9)';
+                btn.style.color = '#333';
+            }
+        }
+
+        // --- CART LOGIC ---
+        let cart = [];
+
+        function addToCart(name, price, image) {
+            cart.push({ name, price, image });
+            renderCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-container');
+            const badge = document.getElementById('cart-count-badge');
+            const subtotalSpan = document.getElementById('subtotal-price');
+            const taxSpan = document.getElementById('tax-price');
+            const totalSpan = document.getElementById('total-price');
+
+            container.innerHTML = '';
+            badge.innerText = cart.length;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="empty-msg">Start adding yummy items!</p>';
+                subtotalSpan.innerText = '$0.00';
+                taxSpan.innerText = '$0.00';
+                totalSpan.innerText = '$0.00';
+                return;
+            }
+
+            let subtotal = 0;
+            
+            cart.forEach((item, index) => {
+                subtotal += item.price;
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('cart-item');
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" class="cart-item-img" alt="food">
+                    <div class="cart-item-details">
+                        <span class="cart-item-title">${item.name}</span>
+                        <span class="cart-item-price">$${item.price.toFixed(2)}</span>
+                    </div>
+                    <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+                `;
+                container.appendChild(itemDiv);
+            });
+
+            const tax = subtotal * 0.05;
+            const total = subtotal + tax;
+
+            subtotalSpan.innerText = `$${subtotal.toFixed(2)}`;
+            taxSpan.innerText = `$${tax.toFixed(2)}`;
+            totalSpan.innerText = `$${total.toFixed(2)}`;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            const total = document.getElementById('total-price').innerText;
+            alert(`Order Placed Successfully!\n\nTotal to Pay: ${total}\n\nThanks for dining at Urban Bites Bistro!`);
+            cart = [];
+            renderCart();
+        }
+    </script>
+</body>
+</html>
