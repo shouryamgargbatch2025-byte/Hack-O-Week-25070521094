@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shouryam Garg - Portfolio</title>
+    <style>
+       
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling when clicking menu */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+   
+        .navbar {
+            background-color: #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #4a90e2; /* Turns blue on hover */
+        }
+
+       
+        header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+        
+        
+        .profile-pic {
+            width: 150px;       /* Size of the image */
+            height: 150px;
+            border-radius: 50%; /* Makes it a circle */
+            border: 5px solid white; /* White ring around it */
+            object-fit: cover;  /* Prevents image from looking squashed */
+            margin-bottom: 20px;
+            background-color: #ddd; /* Grey color if image is missing */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        header p {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+               .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            border-bottom: 3px solid #4a90e2;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            color: #4a90e2;
+            scroll-margin-top: 80px; /* Prevents navbar from covering title */
+        }
+
+        
+        .card {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 { margin-top: 0; color: #222; }
+
+               
+              .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .skill-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            width: 140px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: #4a90e2; 
+        }
+        .skill-icon { font-size: 30px; display: block; margin-bottom: 10px; }
+        .skill-name { font-weight: bold; color: #333; margin: 0; font-size: 14px; }
+
+       
+        .contact-box {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .contact-box p { margin: 10px 0; font-size: 18px; }
+        .contact-box a { color: #4a90e2; font-weight: bold; text-decoration: none; }
+
+        footer { text-align: center; padding: 20px; color: #777; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <img src="C:\Users\sit.lab6\Downloads\img.jpg.jpeg" alt="Shouryam Garg" class="profile-pic">
+        
+        <h1>Shouryam Garg</h1>
+        <p>Web Developer & Programmer</p>
+    </header>
+
+    <div class="container">
+
+        <h2 id="about">About Me</h2>
+        <div class="card">
+            <p>
+                Hi, I'm Shouryam. I am a student passionate about coding. 
+                I love the thrill of turning ideas into reality, which is why I enjoy participating in hackathons. 
+                Whether it's building a quick-commerce concept or a logic-based calculator, I am always looking for the next challenge to solve.
+            </p>
+        </div>
+
+        <h2 id="skills">My Core Skills</h2>
+        <div class="skills-container">
+            <div class="skill-card"><span class="skill-icon">🎨</span><p class="skill-name">HTML & CSS</p></div>
+            <div class="skill-card"><span class="skill-icon">🐍</span><p class="skill-name">Python</p></div>
+            <div class="skill-card"><span class="skill-icon">🧩</span><p class="skill-name">Problem Solving</p></div>
+            <div class="skill-card"><span class="skill-icon">🤝</span><p class="skill-name">Teamwork</p></div>
+        </div>
+
+        <h2 id="projects">My Projects</h2>
+
+        <div class="card">
+            <h3>Project 1: Daily Dash (Hackathon)</h3>
+            <p>
+                A quick-commerce website concept similar to Zepto. I built the front-end layout using HTML and CSS to display products and delivery times.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Project 2: Cricket Run Rate Calculator</h3>
+            <p>
+                A program that calculates the required run rate for a chasing team. Built to practice logic and math in programming.
+            </p>
+        </div>
+
+        <h2 id="contact">Contact Me</h2>
+        <div class="contact-box">
+            <p>📞 +91 62643 81138</p>
+            <p>📧 <a href="mailto:shouryam.garg.batch2025@sitnagpur.siu.edu.in">shouryam.garg.batch2025@sitnagpur.siu.edu.in</a></p>
+            <p>💼 <a href="https://www.linkedin.com/in/shouryam-garg-167729213?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">LinkedIn Profile</a></p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Shouryam Garg</p>
+    </footer>
+
+</body>
+</html>
