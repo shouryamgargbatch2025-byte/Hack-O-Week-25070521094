@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browser History</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f3f9f3; padding:20px; }
+    .box { max-width: 800px; margin:auto; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+    input, button { padding:10px; margin:6px 0; width:100%; }
+    button { background:#28a745; color:white; border:none; border-radius:6px; cursor:pointer; }
+    button:hover { background:#1e7e34; }
+    .preview { margin-top:20px; background:#eefbea; padding:15px; border-radius:10px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Browser History</h2>
+    <input type="text" id="urlInput" placeholder="Enter URL" />
+    <button onclick="visitPage()">Visit Page</button>
+    <button onclick="goBack()">Back</button>
+    <button onclick="goForward()">Forward</button>
+
+    <div class="preview">
+      <h3>Current Page:</h3>
+      <p id="currentPage">No page visited yet</p>
+
+      <h3>Back Stack:</h3>
+      <p id="backHistory">Empty</p>
+
+      <h3>Forward Stack:</h3>
+      <p id="forwardHistory">Empty</p>
+    </div>
+  </div>
+
+  <script>
+    let backStack = [];
+    let forwardStack = [];
+    let currentPage = "";
+
+    function visitPage() {
+      const url = document.getElementById("urlInput").value.trim();
+      if (!url) {
+        alert("Enter a URL");
+        return;
+      }
+
+      if (currentPage) {
+        backStack.push(currentPage);
+      }
+
+      currentPage = url;
+      forwardStack = [];
+      updatePreview();
+      document.getElementById("urlInput").value = "";
+    }
+
+    function goBack() {
+      if (backStack.length === 0) {
+        alert("No back history");
+        return;
+      }
+
+      forwardStack.push(currentPage);
+      currentPage = backStack.pop();
+      updatePreview();
+    }
+
+    function goForward() {
+      if (forwardStack.length === 0) {
+        alert("No forward history");
+        return;
+      }
+
+      backStack.push(currentPage);
+      currentPage = forwardStack.pop();
+      updatePreview();
+    }
+
+    function updatePreview() {
+      document.getElementById("currentPage").innerText = currentPage || "No page visited yet";
+      document.getElementById("backHistory").innerText = backStack.length ? backStack.join(" -> ") : "Empty";
+      document.getElementById("forwardHistory").innerText = forwardStack.length ? forwardStack.join(" -> ") : "Empty";
+    }
+  </script>
+</body>
+</html>
