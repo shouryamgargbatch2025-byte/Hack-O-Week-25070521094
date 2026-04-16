@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Bootcamp Landing Page</title>
+  <style>
+    :root {
+      --bg: #f7f4ea;
+      --paper: #fffdf8;
+      --ink: #162033;
+      --muted: #526072;
+      --brand: #0f766e;
+      --brand-strong: #115e59;
+      --accent: #f59e0b;
+      --line: #dbe6df;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(245, 158, 11, 0.18), transparent 20%),
+        linear-gradient(135deg, #f5f7ef, #edf3ee);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(320px, 420px) 1fr;
+      min-height: 100vh;
+    }
+
+    .panel,
+    .preview-wrap {
+      padding: 24px;
+    }
+
+    .panel {
+      background: rgba(255, 253, 248, 0.95);
+      border-right: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      overflow: auto;
+    }
+
+    .title {
+      margin: 0 0 8px;
+      font-size: 1.85rem;
+    }
+
+    .lead {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 0.94rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #c9d7ce;
+      border-radius: 14px;
+      font: inherit;
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+    }
+
+    .preview-shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+    }
+
+    .hero {
+      padding: 32px;
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.95), rgba(17, 94, 89, 0.88)),
+        linear-gradient(45deg, rgba(255, 255, 255, 0.08), transparent);
+      color: white;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      margin-bottom: 16px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .hero h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.05;
+    }
+
+    .hero p {
+      margin: 0 0 18px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fbbf24, var(--accent));
+      color: #18212f;
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 24px;
+      padding: 22px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .hero-card strong {
+      font-size: 1.1rem;
+    }
+
+    .content {
+      padding: 30px;
+      background: var(--paper);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .feature {
+      background: white;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      min-height: 120px;
+    }
+
+    .feature span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #dbf5f2;
+      color: var(--brand-strong);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .stats {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #f5faf7, #eef5f2);
+      border: 1px solid var(--line);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.8rem;
+      color: var(--brand-strong);
+    }
+
+    .preview-note {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="panel">
+      <h1 class="title">Course Landing Page Builder</h1>
+      <p class="lead">Enter your content and watch the landing page preview update instantly.</p>
+
+      <div class="group">
+        <label for="institute">Institute Name</label>
+        <input id="institute" value="Bright Future Institute">
+      </div>
+
+      <div class="group">
+        <label for="courseTitle">Course Title</label>
+        <input id="courseTitle" value="Web Development Bootcamp">
+      </div>
+
+      <div class="group">
+        <label for="courseTagline">Tagline</label>
+        <input id="courseTagline" value="Build real websites, master JavaScript, and launch your portfolio.">
+      </div>
+
+      <div class="group">
+        <label for="description">Short Description</label>
+        <textarea id="description">A project-based bootcamp for students who want strong HTML, CSS, JavaScript, and responsive design skills with practical mini-projects.</textarea>
+      </div>
+
+      <div class="group">
+        <label for="duration">Duration</label>
+        <input id="duration" value="12 Weeks">
+      </div>
+
+      <div class="group">
+        <label for="mode">Mode</label>
+        <input id="mode" value="Offline + Live Doubt Sessions">
+      </div>
+
+      <div class="group">
+        <label for="ctaText">Button Text</label>
+        <input id="ctaText" value="Reserve Your Seat">
+      </div>
+
+      <div class="group">
+        <label for="featureInput">Features (comma separated)</label>
+        <textarea id="featureInput">HTML & CSS Basics, Responsive Layouts, JavaScript Fundamentals, Portfolio Project</textarea>
+        <small>Use commas to separate each feature card.</small>
+      </div>
+    </aside>
+
+    <main class="preview-wrap">
+      <p class="preview-note">Live Preview</p>
+      <section class="preview-shell">
+        <section class="hero">
+          <div>
+            <span class="badge" id="previewInstitute">Bright Future Institute</span>
+            <h2 id="previewTitle">Web Development Bootcamp</h2>
+            <p id="previewTagline">Build real websites, master JavaScript, and launch your portfolio.</p>
+            <a class="cta" href="#" id="previewButton">Reserve Your Seat</a>
+          </div>
+          <div class="hero-card">
+            <strong>Why students join</strong>
+            <p id="previewDescription">A project-based bootcamp for students who want strong HTML, CSS, JavaScript, and responsive design skills with practical mini-projects.</p>
+          </div>
+        </section>
+
+        <section class="content">
+          <div class="section-head">
+            <div>
+              <h3>What You Will Learn</h3>
+              <p>These cards update based on your input.</p>
+            </div>
+          </div>
+          <div class="features" id="featuresList"></div>
+
+          <div class="stats">
+            <article class="stat">
+              <strong id="previewDuration">12 Weeks</strong>
+              <span>Program Duration</span>
+            </article>
+            <article class="stat">
+              <strong id="previewMode">Offline + Live Doubt Sessions</strong>
+              <span>Learning Mode</span>
+            </article>
+            <article class="stat">
+              <strong>4+</strong>
+              <span>Hands-on Projects</span>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const ids = [
+      "institute",
+      "courseTitle",
+      "courseTagline",
+      "description",
+      "duration",
+      "mode",
+      "ctaText",
+      "featureInput"
+    ];
+
+    const elements = Object.fromEntries(ids.map((id) => [id, document.getElementById(id)]));
+
+    function buildFeatures(value) {
+      const features = value.split(",").map((item) => item.trim()).filter(Boolean);
+      const fallback = ["HTML Foundations", "CSS Styling", "JavaScript Logic", "Responsive Design"];
+      return (features.length ? features : fallback).slice(0, 8);
+    }
+
+    function updatePreview() {
+      document.getElementById("previewInstitute").textContent = elements.institute.value || "Institute Name";
+      document.getElementById("previewTitle").textContent = elements.courseTitle.value || "Course Title";
+      document.getElementById("previewTagline").textContent = elements.courseTagline.value || "Course Tagline";
+      document.getElementById("previewDescription").textContent = elements.description.value || "Course description";
+      document.getElementById("previewDuration").textContent = elements.duration.value || "Duration";
+      document.getElementById("previewMode").textContent = elements.mode.value || "Mode";
+      document.getElementById("previewButton").textContent = elements.ctaText.value || "Join Now";
+
+      const featureMarkup = buildFeatures(elements.featureInput.value).map((feature, index) => `
+        <article class="feature">
+          <span>${index + 1}</span>
+          <strong>${feature}</strong>
+          <p>Practical lessons and guided exercises focused on ${feature.toLowerCase()}.</p>
+        </article>
+      `).join("");
+
+      document.getElementById("featuresList").innerHTML = featureMarkup;
+    }
+
+    ids.forEach((id) => elements[id].addEventListener("input", updatePreview));
+    updatePreview();
+  </script>
+</body>
+</html>
