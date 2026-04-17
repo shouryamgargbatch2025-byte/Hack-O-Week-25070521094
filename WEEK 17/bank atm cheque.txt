@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bank ATM Queue</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eff6ff;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    h2 { color: #1d4ed8; }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background: #1d4ed8; }
+    .customer {
+      background: #dbeafe;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .status {
+      margin-top: 12px;
+      font-weight: bold;
+      color: #1e3a8a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Bank ATM Queue</h2>
+    <input type="text" id="customerName" placeholder="Enter customer name" />
+    <input type="text" id="tokenNo" placeholder="Enter token number" />
+    <button onclick="enqueueCustomer()">Add Customer</button>
+    <button onclick="serveCustomer()">Serve Next Customer</button>
+
+    <div id="queueList"></div>
+    <div class="status" id="queueStatus">Front: - | Rear: -</div>
+  </div>
+
+  <script>
+    let queue = [];
+    const capacity = 8;
+
+    function enqueueCustomer() {
+      const name = document.getElementById("customerName").value.trim();
+      const token = document.getElementById("tokenNo").value.trim();
+
+      if (!name || !token) {
+        alert("Please enter customer name and token number");
+        return;
+      }
+
+      if (queue.length >= capacity) {
+        alert("Queue is full");
+        return;
+      }
+
+      queue.push({ name, token });
+      document.getElementById("customerName").value = "";
+      document.getElementById("tokenNo").value = "";
+      renderQueue();
+    }
+
+    function serveCustomer() {
+      if (queue.length === 0) {
+        alert("Queue is empty");
+        return;
+      }
+
+      queue.shift();
+      renderQueue();
+    }
+
+    function renderQueue() {
+      const queueList = document.getElementById("queueList");
+      queueList.innerHTML = queue.length
+        ? queue.map(c => `<div class="customer">Token ${c.token} - ${c.name}</div>`).join("")
+        : "<p>Queue is empty</p>";
+
+      const front = queue.length ? queue[0].token : "-";
+      const rear = queue.length ? queue[queue.length - 1].token : "-";
+
+      document.getElementById("queueStatus").textContent = `Front: ${front} | Rear: ${rear}`;
+    }
+  </script>
+</body>
+</html>

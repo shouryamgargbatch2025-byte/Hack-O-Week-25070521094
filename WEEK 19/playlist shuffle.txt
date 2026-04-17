@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playlist Shuffle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f3ff;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    h2 { color: #6d28d9; }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #7c3aed;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background: #6d28d9; }
+    .song {
+      background: #ede9fe;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Playlist Shuffle</h2>
+    <input type="text" id="songName" placeholder="Enter song name" />
+    <select id="position">
+      <option value="end">Add at End</option>
+      <option value="front">Add at Front</option>
+    </select>
+    <input type="number" id="deletePos" placeholder="Enter position to delete" />
+    <button onclick="addSong()">Add Song</button>
+    <button onclick="deleteSong()">Delete Song</button>
+    <button onclick="shufflePlaylist()">Shuffle / Reverse</button>
+
+    <div id="playlistPreview">No songs in playlist</div>
+  </div>
+
+  <script>
+    let playlist = [];
+
+    function addSong() {
+      const song = document.getElementById("songName").value.trim();
+      const position = document.getElementById("position").value;
+
+      if (!song) {
+        alert("Please enter a song name");
+        return;
+      }
+
+      if (position === "front") {
+        playlist.unshift(song);
+      } else {
+        playlist.push(song);
+      }
+
+      document.getElementById("songName").value = "";
+      renderPlaylist();
+    }
+
+    function deleteSong() {
+      const pos = parseInt(document.getElementById("deletePos").value);
+
+      if (isNaN(pos) || pos < 1 || pos > playlist.length) {
+        alert("Enter a valid position");
+        return;
+      }
+
+      playlist.splice(pos - 1, 1);
+      document.getElementById("deletePos").value = "";
+      renderPlaylist();
+    }
+
+    function shufflePlaylist() {
+      playlist.reverse();
+      renderPlaylist();
+    }
+
+    function renderPlaylist() {
+      const preview = document.getElementById("playlistPreview");
+      preview.innerHTML = playlist.length
+        ? playlist.map((song, index) => `<div class="song">${index + 1}. ${song}</div>`).join("")
+        : "No songs in playlist";
+    }
+  </script>
+</body>
+</html>

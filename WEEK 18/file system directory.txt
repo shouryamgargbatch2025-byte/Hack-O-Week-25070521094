@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File System Directory</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7ed;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    h2 { color: #c2410c; }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #ea580c;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background: #c2410c; }
+    .preview {
+      background: #ffedd5;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 12px;
+      white-space: pre-line;
+    }
+    .output {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #9a3412;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>File System Directory</h2>
+    <input type="text" id="folderName" placeholder="Enter folder name" />
+    <button onclick="insertFolder()">Insert Folder</button>
+    <button onclick="showPreorder()">Preorder Traversal</button>
+    <button onclick="showInorder()">Inorder Traversal</button>
+    <button onclick="showPostorder()">Postorder Traversal</button>
+
+    <div class="preview" id="treePreview">Root</div>
+    <div class="output" id="traversalOutput">Traversal output will appear here</div>
+  </div>
+
+  <script>
+    class Node {
+      constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+      }
+    }
+
+    let root = new Node("Root");
+
+    function insertNode(node, value) {
+      if (value.localeCompare(node.value) < 0) {
+        if (!node.left) node.left = new Node(value);
+        else insertNode(node.left, value);
+      } else {
+        if (!node.right) node.right = new Node(value);
+        else insertNode(node.right, value);
+      }
+    }
+
+    function insertFolder() {
+      const folder = document.getElementById("folderName").value.trim();
+      if (!folder) {
+        alert("Please enter a folder name");
+        return;
+      }
+
+      insertNode(root, folder);
+      document.getElementById("folderName").value = "";
+      renderTree();
+    }
+
+    function preorder(node, arr = []) {
+      if (!node) return arr;
+      arr.push(node.value);
+      preorder(node.left, arr);
+      preorder(node.right, arr);
+      return arr;
+    }
+
+    function inorder(node, arr = []) {
+      if (!node) return arr;
+      inorder(node.left, arr);
+      arr.push(node.value);
+      inorder(node.right, arr);
+      return arr;
+    }
+
+    function postorder(node, arr = []) {
+      if (!node) return arr;
+      postorder(node.left, arr);
+      postorder(node.right, arr);
+      arr.push(node.value);
+      return arr;
+    }
+
+    function treeText(node, level = 0) {
+      if (!node) return "";
+      let text = "";
+      text += treeText(node.right, level + 1);
+      text += " ".repeat(level * 4) + node.value + "\n";
+      text += treeText(node.left, level + 1);
+      return text;
+    }
+
+    function renderTree() {
+      document.getElementById("treePreview").textContent = treeText(root);
+    }
+
+    function showPreorder() {
+      document.getElementById("traversalOutput").textContent =
+        "Preorder: " + preorder(root).join(", ");
+    }
+
+    function showInorder() {
+      document.getElementById("traversalOutput").textContent =
+        "Inorder: " + inorder(root).join(", ");
+    }
+
+    function showPostorder() {
+      document.getElementById("traversalOutput").textContent =
+        "Postorder: " + postorder(root).join(", ");
+    }
+
+    renderTree();
+  </script>
+</body>
+</html>

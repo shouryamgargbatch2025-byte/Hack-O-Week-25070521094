@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager Undo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0fdf4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    h2 { color: #166534; }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #22c55e;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background: #16a34a; }
+    .task {
+      background: #ecfccb;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .status {
+      margin-top: 12px;
+      font-weight: bold;
+      color: #166534;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Task Manager Undo</h2>
+    <input type="text" id="taskName" placeholder="Enter task name" />
+    <textarea id="taskDesc" placeholder="Enter task description"></textarea>
+    <button onclick="addTask()">Add Task</button>
+    <button onclick="undoTask()">Undo</button>
+    <button onclick="redoTask()">Redo</button>
+
+    <div id="taskList"></div>
+    <div class="status" id="stackInfo">Undo Stack: 0 | Redo Stack: 0</div>
+  </div>
+
+  <script>
+    let tasks = [];
+    let undoStack = [];
+    let redoStack = [];
+
+    function addTask() {
+      const name = document.getElementById("taskName").value.trim();
+      const desc = document.getElementById("taskDesc").value.trim();
+
+      if (!name || !desc) {
+        alert("Please enter task name and description");
+        return;
+      }
+
+      const task = { name, desc };
+      tasks.push(task);
+      undoStack.push({ type: "add", task });
+      redoStack = [];
+
+      document.getElementById("taskName").value = "";
+      document.getElementById("taskDesc").value = "";
+      renderTasks();
+    }
+
+    function undoTask() {
+      if (undoStack.length === 0) {
+        alert("Nothing to undo");
+        return;
+      }
+
+      const action = undoStack.pop();
+      if (action.type === "add") {
+        tasks.pop();
+      }
+
+      redoStack.push(action);
+      renderTasks();
+    }
+
+    function redoTask() {
+      if (redoStack.length === 0) {
+        alert("Nothing to redo");
+        return;
+      }
+
+      const action = redoStack.pop();
+      if (action.type === "add") {
+        tasks.push(action.task);
+      }
+
+      undoStack.push(action);
+      renderTasks();
+    }
+
+    function renderTasks() {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = tasks.length
+        ? tasks.map(task => `<div class="task"><strong>${task.name}</strong><br>${task.desc}</div>`).join("")
+        : "<p>No tasks added</p>";
+
+      document.getElementById("stackInfo").textContent =
+        `Undo Stack: ${undoStack.length} | Redo Stack: ${redoStack.length}`;
+    }
+  </script>
+</body>
+</html>

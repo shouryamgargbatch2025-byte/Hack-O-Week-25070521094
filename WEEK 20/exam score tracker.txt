@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exam Score Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ecfeff;
+      padding: 20px;
+    }
+    .container {
+      max-width: 750px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    h2 { color: #0f766e; }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #14b8a6;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background: #0f766e; }
+    .score {
+      background: #ccfbf1;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .stats {
+      margin-top: 14px;
+      font-weight: bold;
+      color: #115e59;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Exam Score Tracker</h2>
+    <input type="number" id="scoreInput" placeholder="Enter exam score" />
+    <button onclick="addScore()">Add Score</button>
+
+    <div id="scoreList">No scores added</div>
+    <div class="stats" id="scoreStats">Min: - | Max: - | Mode: -</div>
+  </div>
+
+  <script>
+    let scores = [];
+
+    function addScore() {
+      const score = parseInt(document.getElementById("scoreInput").value);
+
+      if (isNaN(score)) {
+        alert("Please enter a valid score");
+        return;
+      }
+
+      scores.push(score);
+      document.getElementById("scoreInput").value = "";
+      renderScores();
+    }
+
+    function getMode(arr) {
+      let freq = {};
+      let maxCount = 0;
+      let mode = "-";
+
+      for (let num of arr) {
+        freq[num] = (freq[num] || 0) + 1;
+        if (freq[num] > maxCount) {
+          maxCount = freq[num];
+          mode = num;
+        }
+      }
+
+      return mode;
+    }
+
+    function renderScores() {
+      const scoreList = document.getElementById("scoreList");
+
+      if (scores.length === 0) {
+        scoreList.innerHTML = "No scores added";
+        document.getElementById("scoreStats").textContent = "Min: - | Max: - | Mode: -";
+        return;
+      }
+
+      scoreList.innerHTML = scores.map(score => `<div class="score">${score}</div>`).join("");
+
+      const min = Math.min(...scores);
+      const max = Math.max(...scores);
+      const mode = getMode(scores);
+
+      document.getElementById("scoreStats").textContent =
+        `Min: ${min} | Max: ${max} | Mode: ${mode}`;
+    }
+  </script>
+</body>
+</html>
